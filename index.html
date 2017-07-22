@@ -1,206 +1,367 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
-<head>
-    <title>MIDI Sequencer</title>
-    <meta http-equiv="Cache-control" content="no-cache" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, user-scalable=false">
+    <meta name="description" content="The personal and professional website for Alex Kort, scientist, engineer and musician.">
+    <meta name="author" content="Alex Kort">
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+<!--     <meta http-equiv="X-UA-Compatible" content="IE=9" /> -->
+
+    <title>The Homepage of Alex Kort</title>
+
     <!-- Bootstrap core CSS -->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="../css/footer.css" rel="stylesheet">
-    <link href="../css/graphics.css" rel="stylesheet">
-    <link href="../css/push_button.css" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap-select.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.iphonepicker.js"></script>
-    <script type="text/javascript" src="js/sequencer.js"></script>
-    <style>
-    body {
-/*        background-image: url("../img/");*/
-        background-color: #FFFFFF;
-    }
-    </style>
-</head>
+    <link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-<body>
-    <div class="container-fluid clock">
-        <div class="row">
-            <div class="col-xs-12 col-md-12 col-centered text-center">
-                <h1>MIDI Sequencer</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-12 col-centered text-center">
-                <select id="midiOut" class="selectpicker">
-                    <option value="">Not connected</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            
-            <div class="col-xs-3 col-md-1">
-                <h3>BPM</h3>
-            </div>
-            <div class="col-xs-3 col-md-1">
-                <h3>Divide</h3>
-            </div>
-            <div class="col-xs-3 col-md-2">
-                <h3 style="margin-left:10px;">Control</h3>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-xs-3 col-md-1">
-                <select id="bpm" name="bpm"></select>
-            </div>
-            <div class="col-xs-3 col-md-1">
-                <select id="division" name="division">
-                    <option value="48" selected>Half</option>
-                    <option value="24">Qtr</option>
-                    <option value="12" selected>8th</option>
-                    <option value="6">16th</option>
-                    <option value="3">32nd</option>
-                </select>
-            </div>
-             <div class="col-xs-3 col-md-2">
-                <a id="play" href="#" class="push_button blue" style="margin-top:35px;"></a>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-xs-4 col-md-2 col-lg-2">
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp0" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp4" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp6" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:30px;margin-left:7px;">
-                    <img id="octUp7" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAA2FBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw1Xz6fAAAAR3RSTlMAAQIEBQwOERIVFxslJicpKywuMDEyNTY3ODk6PT9ARUpLT1BVVlhZW15fYWJjZGeDhZKVm7K1yMzP0dPe4uTo6+3v9ff7/fnonpQAAAC6SURBVBgZXcEJO0JRFIbR72SWIi6ZM4UiklldF1e9//8f2e3Ok2otubDdySDrJEFj5U+idE3RPRNacndMacisM3LbYqQkhRR3JB3jekGbuH2ZA9yGHhjakasy1NYHZktRgnlXDoOKzOmJTGUAub5gV+YczmQOIdMLJJLqmAtJe/CsG+iXdI27UrkPDS1jukRdzJL0xIxHSfMpU3pzMqu/TMhX5BbfGHtdUFS4/MF914P+hWKt2awVg9wfy5VDXy3ewk0AAAAASUVORK5CYII=" alt="OctUp">
-                </div>
-            </div>            
-        </div>
-        <br>
-        <div class="row">
-                    <div class="col-xs-4 col-md-2 col-lg-2">
-                        <a id="octaveUpAll" href="#" class="push_button blue"></a>
-                        <a id="octaveDownAll" href="#" class="push_button blue"></a>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note0"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note1"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note2"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note3"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note4"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note5"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note6"></select>
-                    </div>
-                    <div class="col-xs-1 col-md-2 col-lg-1">
-                        <select id="note7"></select>
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4 col-md-2 col-lg-2">
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown0" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown4" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown5" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown6" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>
-            <div class="col-xs-1 col-md-2 col-lg-1">
-                <div class="image" style="margin-top:10px;margin-left:7px;">
-                    <img id="octDown7" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAxlBMVEUAAAA0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdw0sdz9TyvAAAAAQXRSTlMAAQIDBAYHCAkKCw4VGhwkJio7PkdMTldcaWtvgIOJjo+SlJWio6WmqKqwsrW3urzAzM/R1dna3ODi5Obz9ff5/QxS3+UAAADBSURBVBgZXcELW8FQAMfhn3NmG6ZSVLroQleETFO6/b//l3J2PPaM98WrX6zkrLp1CucqnLFhnlTyYMj1teMWp6M9bQh+tOfbciKpl0zlTZOepGP60hXYiZw3C9fSPZmUAHYsjQxwIH3wJ82qgBm+GqA6k375kvQeAsYA4VzSJ49y0ggvSuUMOFVuEePEC+U6xPKyGtQy5f4juJS3bDSW8rpAZaId4wpOlKpkHuLZOxVuDFtHL/KeDykLmq1WM2BjDflVPCqL7/aCAAAAAElFTkSuQmCC" alt="OctDown">
-                </div>
-            </div>            
-        </div>
-        <br>
+    <!-- Add custom CSS here -->
+
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'> -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    
+     <!--[if lt IE 10]>
+	  <script src="js/html5shiv.js"></script>
+    <script src="js/response.min.js"></script>
+    <![endif]--> 
+
+  </head>
+  
+  <body>
+  <div style="height:100%;">
+    <!-- Side Menu -->
+    <a id="menu-toggle" href="#" class="btn btn-primary toggle"><i class="glyphicon glyphicon-chevron-left"></i></a>
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <a id="menu-close" href="#" class="btn btn-default pull-right toggle"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        <li class="sidebar-brand"><a href="#top">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-    <footer class="page-row">
-        <p class="text-muted credit" style="float: right;">Copyright &copy;
-            <script>
-            document.write(new Date().getFullYear())
-            </script> by <a href="http://www.alexkort.com">Alex Kort</a>. All Rights Reserved.</p>
+    <!-- /Side Menu -->
+  
+    <!-- Full Page Image Header Area -->
+    <div id="top" class="header">
+      <div class="vert-text">
+      <div class="container">
+      	<div class="jumbotron">
+	        <h2>Hello, my name is Alex Kort.<br/>I am a <a href="https://github.com/starmandeluxe?tab=repositories" style="text-decoration: none;">software developer</a>, a <a href="https://soundcloud.com/starmandeluxe"  style="text-decoration: none;">musician</a>, one side of an <a href="http://aktion-51.bandcamp.com/" style="text-decoration: none;">electronic duo</a>, <a href="BPMDetector/" style="text-decoration: none;">an amateur web designer</a>, and <a href="http://www.linkedin.com/profile/view?id=23168679&trk=nav_responsive_tab_profile" style="text-decoration: none;">IT professional</a>.</h2>
+	        <br/>
+	    </div> <!-- Jumbotron -->
+	   </div>
+        <a href="#about" class="btn btn-default btn-lg">See More</a>
+      </div>
+    </div>
+    <!-- /Full Page Image Header Area -->
+  
+    <!-- Intro -->
+    <div id="about" class="about">
+      <div class="container">
+        <div class="row" style="color:white;font-size:24px;font-weight:bold;">
+	        <div class="col-4 col-sm-4 col-lg-4" >
+	            <h2 style="text-decoration:underline">Stuff I Like</h2>
+	            <p>
+	                <ul>
+						<li><a href="http://japanese.stackexchange.com/">Japanese</a></li>
+						<li><a href="https://en.wikipedia.org/wiki/Computer_science">Computer Science</a></li>
+						<li><a href="http://www.reddit.com/r/cats/">Cats</a></li>
+						<li><a href="http://www.gocomics.com/calvinandhobbes">Calvin and Hobbes</a></li>
+						<li><a href="http://www.modulargrid.net">Modular Synthesizers</a></li>
+						<li><a href="https://soundcloud.com/starmandeluxe/sets/self-piano-recordings">Classical Piano</a></li>
+					</ul>
+	            </p>
+	        </div>  
+	        <div class="col-4 col-sm-4 col-lg-4">
+	            <h2 style="text-decoration:underline">Sites I Like</h2>
+	            <p>
+	                <ul>
+						<li><a href="http://sharepoint.stackexchange.com/users/13732/alex">Stack Exchange</a></li>
+						<li><a href="http://stackoverflow.com/users/1797628/starmandeluxe">Stack Overflow</a></li>
+						<li><a href="http://www.khanacademy.org/cs">Khan Academy</a></li>
+						<li><a href="http://www.codecademy.com/learn">Codecademy</a></li>
+						<li><a href="https://www.udemy.com/">Udemy</a></li>
+					</ul>
+	            </p>
+	        </div>  
+	        <div class="col-4 col-sm-4 col-lg-4">
+	            <h2 style="text-decoration:underline">Tech I Like</h2>
+	            <p>
+	                <ul>
+						<li>C#/.NET/Azure</li>
+            <li>Java Spring</li>
+						<li>Javascript/JQuery</li>
+						<li>HTML5/CSS3</li>
+            <li>Web Audio API</li>
+						<li>Team City/Bamboo CI</li>
+					</ul>
+	            </p>
+	        </div>  
+        </div>
+      </div>
+    </div>
+    <!-- /Intro -->
+  
+    <!-- Resume -->
+    <div id="resume" class="resume">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 text-center">
+            <h2>An Abridged Resume</h2>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-1">
+            <div class="resume-item">
+              <i class="resume-icon icon-rocket"></i>
+              <h4>Cal Poly</h4>
+              <p>2004-2009<br/>Graduated with a Bachelor's Degree in Computer Science. Concentrated in Databases and Graphics.</p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="resume-item">
+              <i class="resume-icon icon-magnet"></i>
+              <h4>Waseda University</h4>
+              <p>2008-2009<br/>1-year study abroad program in the School of International Liberal Studies.</p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="resume-item">
+              <i class="resume-icon icon-shield"></i>
+              <h4>Amgen Inc.</h4>
+              <p>2010-2012<br/>Software Developer for SharePoint and custom applications. Became System Owner of Project Management software system, leading a team through maintenance and upgrades.<br/>Used: C#/.NET, SharePoint, SQL</p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="resume-item">
+              <i class="resume-icon icon-pencil"></i>
+              <h4>F&M Bank</h4>
+              <p>2012-2014<br/>Software Engineer of internal business apps, SharePoint customization, admin, and legacy maintenance. Tech lead of Data Integration automation, website creation and maintenance.<br/>Used: C#/.NET, Javascript, SQL Server, Powershell, TeamCity CI</p>
+            </div>
+          </div>
+           <div class="col-md-2">
+            <div class="resume-item">
+              <i class="resume-icon icon-magnet"></i>
+              <h4>Rakuten, Inc.</h4>
+              <p>2014-Present<br/>Software Developer for internal cloud web applications that support the mobile infrastructure.<br/>Used:C#/.NET MVC5 API, Microsoft Azure, Javascript/Jquery, SQL Server, Team City CI, Java Spring, Thymeleaf, Spring Security</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Resume -->
+
+    <!-- Portfolio -->
+    <div id ="portfolio" class="portfolio" style="color:white;">
+      <div class="container">
+        <div class="row" >
+          <div class="col-md-4 col-md-offset-4 text-center">
+            <h2>Portfolio</h2>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2 text-center">
+            <div class="portfolio-item">
+              <a href="http://www.trionotturno.com" target="_blank"><img class="img-portfolio img-responsive" src="img/trionotturno.jpg" alt="Trio Notturno Site" style="height:250px;"></a>
+              <h4>Trio Notturno</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="TapiocaKing"><img class="img-portfolio img-responsive" src="img/TapiocaKing_Screen1.jpg" alt="Senior Project Java Applet Game"style="height:250px;"></a>
+              <h4>Cal Poly Senior Project - Java Applet Browser Game</h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2 text-center">
+            <div class="portfolio-item">
+              <a href="https://www.fmb.com/md/" target="_blank"><img class="img-portfolio img-responsive" src="img/PhysicianBankingScreen.jpg" alt="FMB Physician Banking"></a>
+              <h4>Physician Banking Site</h4>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <div class="portfolio-item">
+              <a href="BPMDetector/"><img class="img-portfolio img-responsive" src="img/bpmscreen.jpg" alt="BPM Screen"></a>
+              <h4>Web Audio BPM Detector</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Portfolio -->
+
+    <!-- Music -->
+    <div id ="music" class="music">
+      <div class="vert-text">
+       <div class="row" >
+          <div class="col-md-4 col-md-offset-4 text-center">
+            <h1>Music Projects</h1>
+            <hr>
+          </div>
+        </div>
+        <br/>
+         <div class="row">
+          <div class="col-md-6 text-center">
+          	<div id="kaoss" class="jumbotron" style="width:100%;">
+          		<a href="http://www.youtube.com/user/starmandeluxe2001">YouTube (Now Broadcasting Live!)</a>
+          		<br/>
+          		<iframe width="640" height="300" src="https://www.youtube.com/embed/lxk3SuKvzDs" frameborder="0" allowfullscreen></iframe>
+          	</div>
+          </div>
+          <div class="col-md-6 text-center">
+          	<div id="starmansoundcloud" class="jumbotron" style="width:100%;">
+          		<a href="http://www.soundcloud.com/starmandeluxe">SoundCloud (as StarmanDeluxe)</a>
+          		<br/>
+          		<iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/246509717&amp;color=0092ff&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+          	</div>
+          </div>
+         </div> <!-- row 1 -->
+        <br/><br/>
+        <div class="row">
+          <div class="col-md-6 text-center">
+          	<div id="aktion51soundcloud" class="jumbotron" style="width:100%;">
+          		<a href="http://www.soundcloud.com/aktion-51">SoundCloud (as AKTioN 51) </a>
+          		<br/>
+              <iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/199148152&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+          	</div>
+          </div>
+          <div class="col-md-6 text-center">
+          	<div id="aktion51site" class="jumbotron" style="width:100%;">
+          		<a href="https://www.mixcloud.com/starmandeluxe/">Mixcloud</a>
+              <iframe width="100%" height="300" src="https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fstarmandeluxe%2Fshibuya-bonus-set-songs-for-dancing-in-the-street-traktor-s4-live-edit%2F" frameborder="0"></iframe>
+          	</div>
+          </div>
+         </div> <!-- row 2 -->
+         <br/>
+      </div>
+    </div>
+    <!-- /Music -->
+
+    <!-- Contact Form -->
+    <div id="contact" class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <h2>Contact Me</h2>
+            <br/>
+            <!-- Form itself -->
+	          <form name="sentMessage" class="well" id="contactForm" novalidate>
+		       <legend class="title" style="font-size:22pt;color:black;font-weight:900;"></legend>
+			 <div class="control-group">
+	                    <div class="controls">
+				<input type="text" class="form-control" 
+				   	   placeholder="Full Name" id="name" required
+				           data-validation-required-message="Please enter your name" />
+				  <p class="help-block"></p>
+			   </div>
+		         </div> 	
+	                <div class="control-group">
+	                  <div class="controls">
+				<input type="email" class="form-control" placeholder="Email" 
+				   	            id="email" required data-validation-required-message="Please enter your email" />
+				   	            <p class="help-block"></p>
+			</div>
+		    </div> 	
+
+	               <div class="control-group">
+	                 <div class="controls">
+					 <textarea rows="5" cols="100" class="form-control"
+	                       placeholder="Message" id="message" required
+			       data-validation-required-message="Please enter your message" minlength="5" 
+	                       data-validation-minlength-message="Please enter at least 5 characters" 
+	                        maxlength="999" style="resize:none;"></textarea>
+	                        <p class="help-block"></p>
+			</div>
+	               </div> 		 
+		     <div id="success"> </div> <!-- For success/fail messages -->
+		    <button type="submit" class="btn btn-primary pull-right">Send</button><br/><br/>
+	          </form> <!-- end form -->
+
+            <br/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Call to Action -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <ul class="list-inline">
+              <li><a href="https://www.facebook.com/alexkort"><i class="icon-large icon-facebook"></i></a></li>
+              <li><a href="https://twitter.com/starmandlx"><i class="icon-large icon-twitter"></i></a></li>
+              <li><a href="http://www.youtube.com/user/StarmanDeluxe2001"><i class="icon-large icon-youtube"></i></a></li>
+              <li><a href="https://github.com/starmandeluxe"><i class="icon-large icon-github"></i></a></li>
+              <li><a href="https://plus.google.com/100921445938633527159/about/p/pub"><i class="icon-large icon-google-plus"></i></a></li>
+            </ul>
+            <hr>
+            <div id="footer" style="color:black;">
+            	<p>Site Design By &copy; Alex Kort 2013</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
-</body>
+    <!-- /Footer -->
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.js"></script>
+
+  <!-- contact form scripts -->
+  <script src="js/contactformjs/jqBootstrapValidation.js"></script>
+  <script src="js/contactformjs/contact_me.js"></script>
+
+  <!-- Custom JavaScript for the Side Menu - Put in a custom JS file if you want to clean this up -->
+  <script>
+      $("#menu-close").click(function(e) {
+          e.preventDefault();
+          $("#sidebar-wrapper").toggleClass("active");
+          $("#menu-close").hide();
+          $("#menu-toggle").show();
+      });
+  </script>
+  <script>
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#sidebar-wrapper").toggleClass("active");
+          $("#menu-toggle").hide();
+          $("#menu-close").show();
+      });
+  </script>
+  <script>
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+          if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+              || location.hostname == this.hostname) {
+
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+              $('html,body').animate({
+                scrollTop: target.offset().top
+              }, 1000);
+              return false;
+            }
+          }
+        });
+      });
+    </script>
+	</div>
+  </body>
+  
 
 </html>
