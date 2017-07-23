@@ -91,8 +91,6 @@ window.addEventListener('load', function() {
 
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext();
-    //skin the midi device select dropdown
-    $('.selectpicker').selectpicker();
     //initialize BPM range selector list and set default BPM
     createBPMOptions(document.getElementById("bpm"));
     $('#bpm').val(128);
@@ -105,8 +103,6 @@ window.addEventListener('load', function() {
     $("[id^=note]").val('24');
 
     //skin the select dropdowns
-    $('#bpm').iPhonePicker({ width: '50px', imgRoot: 'images/' });
-    $('#division').iPhonePicker({ width: '50px', imgRoot: 'images/' });
     $("[id^=note]").iPhonePicker({ width: '35px', imgRoot: 'images/' });
 
     //remove focus from Play button
@@ -182,6 +178,7 @@ function changeMIDIOut(e) {
 function changeBPM(e) {
     bpm = e.target[e.target.selectedIndex].value;
     tempo = 60 / bpm / 24;
+    $('#bpm').iPhonePickerRefresh();
 }
 
 //Event handler for beat divison selector update
@@ -268,7 +265,7 @@ function advanceClock() {
         }
         
         //send the current note
-        currentNote =  $("#note" + stepNum).val();
+        currentNote = $("#note" + stepNum).val();
         midiDevice.send([0x90, currentNote, 0x7f]);
     }
     //the next clock will be at the next tempo marker
