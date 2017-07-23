@@ -2,16 +2,16 @@ var audioContext = null;
 var midiAccess;
 var midiDevice;
 var bpm = 128; //default beats per minute setting
-var tempo; //tempo in 24ppq
 var lookahead = 25.0; // How frequently to call scheduling function (ms)
-var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec)
+var scheduleAheadTime = 0.2; // How far ahead to schedule audio (sec)
 var nextClockTime = 0.0; // when the next note is due.
 var startTime = 0;
 var playPressed = false;
 var isPlaying = false;
-var beatCounter = 0; // Tracks beats in 24ppq, so up to 192 for 8 steps
+var beatCounter = 0; // 1/16 beat count per step, so 128 beats for 8 steps
 var beatDiv = 8; // Divisons of the beat to play
 var stepNum = 0; // Tracks current step (up to 8 steps by default)
+var timerWorker = null;     // The Web Worker used to fire timer messages
 
 //Midi note mappings
 var notes = {
@@ -45,6 +45,7 @@ var currentNote = null; //currently playing note
 
 //Actions to perform on load
 window.addEventListener('load', function() {
+    console.log("Test3");
     //load button icons
     $('#play').html("<i class=\"fa fa-stop\"></i>");
     $('#play').html("<i class=\"fa fa-play\"></i>");
@@ -89,8 +90,27 @@ window.addEventListener('load', function() {
       octaveDownAll();
     }, false);
 
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioContext = new AudioContext();
+    //window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    //audioContext = new AudioContext();
+    if (window.hasOwnProperty('AudioContext') && !window.hasOwnProperty('webkitAudioContext')) {
+        window.webkitAudioContext = AudioContext;
+    }
+    audioContext = new webkitAudioContext();
+
+    timerWorker = new Worker("js/timerworker.js");
+
+    timerWorker.onmessage = function(e) {
+        if (e.data == "tick") {
+            // console.log("tick!");
+            scheduleClock();
+        }
+        else {
+            console.log("message: " + e.data);
+        }
+    };
+
+    timerWorker.postMessage({"interval":lookahead});
+
     //initialize BPM range selector list and set default BPM
     createBPMOptions(document.getElementById("bpm"));
     $('#bpm').val(128);
@@ -130,9 +150,6 @@ function onMIDISuccess(midi) {
     selectMIDIOut = document.getElementById("midiOut");
     selectMIDIOut.onchange = changeMIDIOut;
     selectMIDIOut.options.length = 0;
-
-    //calculate the MIDI clock (24ppq)
-    tempo = 60 / bpm / 24;
 
     //loop through midi devices and initialize midi device selector
     var outputs = midiAccess.outputs.values();
@@ -177,13 +194,13 @@ function changeMIDIOut(e) {
 //Event handler for when BPM picker was changed
 function changeBPM(e) {
     bpm = e.target[e.target.selectedIndex].value;
-    tempo = 60 / bpm / 24;
-    $('#bpm').iPhonePickerRefresh();
+    console.log("bpm changed!");
 }
 
 //Event handler for beat divison selector update
 function changeDivision(e) {
     beatDiv = $('#division').val();
+    console.log("division changed!");
 }
 
 //Start the MIDI sequencer clock: Send a Clock Start signal first, 
@@ -202,6 +219,7 @@ function play() {
         $('#play').html("<i class=\"fa fa-play\"></i>");
         $('#status').text("Stopped");
         isPlaying = false;
+        timerWorker.postMessage("stop");
         stop();
     }
     else {
@@ -210,66 +228,74 @@ function play() {
         //toggle icon to square
         $('#play').html("<i class=\"fa fa-stop\"></i>");
         $('#status').text("Playing...");
-        nextClockTime = 0;
-        tempo = 60 / bpm / 24;
+        //nextClockTime = 0
+        nextClockTime = audioContext.currentTime;
+        timerWorker.postMessage("start");
         startTime = audioContext.currentTime + 0.005;
-        scheduleClock();
     }
 }
 
 //Stops the MIDI clock
 function stop() {
     midiDevice.send([0xFC]);
-    window.clearTimeout(timerID);
+    //window.clearTimeout(timerID);
 }
 
 //schedules when the next clock should fire
 function scheduleClock() {
-    var currentTime = audioContext.currentTime;
-    currentTime -= startTime;
-
-    while (nextClockTime < currentTime + scheduleAheadTime) {
-         if (playPressed) {
-               setTimeout(function() {
+    while (nextClockTime < audioContext.currentTime + scheduleAheadTime) {
+        if (playPressed) {
+            setTimeout(function() {
                 //send midi clock start only the first beat! 
                 //timeout needed to avoid quick first pulse
                 playPressed = false;
                 midiDevice.send([0xFA]);
-                midiDevice.send([0xF8]);
-            }, currentTime + nextClockTime);
-         }
-        advanceClock();
+            }, audioContext.currentTime + nextClockTime);
+        }
+
+        advanceClock(nextClockTime);
+        calcBeat();
     }
-    timerID = window.setTimeout("scheduleClock()", 0);
 }
 
 //move the clock forward by tempo intervals (24ppq)
-function advanceClock() {
-    //send midi clock signal
-    midiDevice.send([0xF8]);
-    //advance beat
-    beatCounter++;
-    if (beatCounter >= 192) {
-        beatCounter = 0;
-    }
-
+function advanceClock(nextTime) {
     //calculate divisions per step
     if (beatCounter % beatDiv == 0) {
         stepNum++;
         if (stepNum >= 8) {
             stepNum = 0;
         }
-        if (currentNote) {
-            //turn off current note playing
-            midiDevice.send([0x80, currentNote, 0x40]);
-        }
+
+        // if (currentNote) {
+        //     //turn off current note playing
+        //     midiDevice.send([0x80, currentNote, 0x40]);
+        // }
         
         //send the current note
         currentNote = $("#note" + stepNum).val();
-        midiDevice.send([0x90, currentNote, 0x7f]);
+        setTimeout(function() {
+            midiDevice.send([0x80, currentNote, 0x40]);
+            midiDevice.send([0x90, currentNote, 0x7f]);   
+        }, nextTime);
     }
-    //the next clock will be at the next tempo marker
-    nextClockTime += tempo;
+
+    // if (beatCounter % 2 == 0) {
+    //     setTimeout(function() {
+    //         //send midi clock signal
+    //         midiDevice.send([0xF8]);
+    //     }, nextTime);
+    // }
+}
+
+function calcBeat() {
+    var secondsPerBeat = 60.0 / bpm;
+    nextClockTime += 0.0625 * secondsPerBeat;
+
+     beatCounter++;    // Advance the beat number, wrap to zero
+     if (beatCounter == 128) {
+         beatCounter = 0;
+     }
 }
 
 function octaveUpAll() {
@@ -328,7 +354,7 @@ function octaveDownSingle() {
 
 //Helper function to create the BPM list
 function createBPMOptions(select) {
-    for (var i = 60; i < 200; i++) {
+    for (var i = 60; i < 300; i++) {
         createBPMOption(select,i);
     }
 }
