@@ -185,7 +185,7 @@ function changeBPM(e) {
 }
 
 //Event handler for beat divison selector update
-function changeDivision() {
+function changeDivision(e) {
     beatDiv = $('#division').val();
 }
 
