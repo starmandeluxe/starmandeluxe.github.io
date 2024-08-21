@@ -13,7 +13,7 @@
     <title>The Homepage of Alex Kort</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/bootstrap.icon-large.min.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
 
@@ -23,6 +23,20 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'> -->
     <!-- <link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'> -->
     <link href="css/stylish-portfolio.css" rel="stylesheet">
+
+    <style type="text/css">
+      .jumbotron {
+        opacity: 0.7;
+        box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.6);
+        padding: 30px;
+        margin-bottom: 30px;
+        /*font-size: 22.5px;*/
+        /*font-weight: 200;*/
+        line-height: 2.1428571435;
+        color: inherit;
+        background: rgba(2,5,15, .4);
+      }
+    </style>
     
      <!--[if lt IE 10]>
 	  <script src="js/html5shiv.js"></script>
@@ -34,10 +48,10 @@
   <body>
   <div style="height:100%;">
     <!-- Side Menu -->
-    <a id="menu-toggle" href="#" class="btn btn-primary toggle"><i class="glyphicon glyphicon-chevron-left"></i></a>
+    <a id="menu-toggle" href="#" class="btn btn-primary toggle float-end"><i class="bi bi-chevron-left"></i></a>
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-        <a id="menu-close" href="#" class="btn btn-default pull-right toggle"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        <a id="menu-close" href="#" class="btn btn-primary toggle"><i class="bi bi-chevron-right"></i></a>
         <li class="sidebar-brand"><a href="#top">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#resume">Resume</a></li>
@@ -52,15 +66,14 @@
     <div id="top" class="header">
       <div class="vert-text">
       <div class="container">
-      	<div class="jumbotron">
-	        <h2>Hello, my name is Alex Kort.<br/>I am a <a href="https://github.com/starmandeluxe?tab=repositories" style="text-decoration: none;">software developer</a>, a <a href="https://soundcloud.com/starmandeluxe"  style="text-decoration: none;">musician</a>, one side of an <a href="http://aktion-51.bandcamp.com/" style="text-decoration: none;">electronic duo</a>, <a href="midiseq/" style="text-decoration: none;">an amateur web designer</a>, and <a href="https://www.linkedin.com/in/alex-kort/" style="text-decoration: none;">IT professional</a>.</h2>
-	        <br/>
-	    </div> <!-- Jumbotron -->
-	   </div>
-        <a href="#about" class="btn btn-default btn-lg">See More</a>
+        <div class="jumbotron">
+          <h2>Hello, my name is Alex Kort.<br/>I am a <a href="https://github.com/starmandeluxe?tab=repositories" style="text-decoration: none;">software developer</a>, a <a href="https://soundcloud.com/starmandeluxe"  style="text-decoration: none;">musician</a>, one side of an <a href="http://aktion-51.bandcamp.com/" style="text-decoration: none;">electronic duo</a>, <a href="midiseq/" style="text-decoration: none;">an amateur web designer</a>, and <a href="https://www.linkedin.com/in/alex-kort/" style="text-decoration: none;">IT professional</a>.</h2>
+          <br/>
+      </div> <!-- Jumbotron -->
+     </div>
+        <a href="#about" class="btn btn-primary">See More</a>
       </div>
     </div>
-    <!-- /Full Page Image Header Area -->
   
     <!-- Intro -->
     <div id="about" class="about">
@@ -99,41 +112,41 @@
     <div id="resume" class="resume">
       <div class="container">
         <div class="row">
-          <div class="col-md-4 col-md-offset-4 text-center">
+          <div class="col d-flex align-items-center justify-content-center">
             <h2>An Abridged Resume</h2>
             <hr>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2 col-md-offset-1">
+          <div class="col">
             <div class="resume-item">
               <i class="resume-icon icon-rocket"></i>
               <h4>Cal Poly</h4>
               <p>2004-2009<br/>Graduated with a Bachelor's Degree in Computer Science. Concentrated in Databases and Graphics.</p>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col">
             <div class="resume-item">
               <i class="resume-icon icon-shield"></i>
               <h4>Amgen Inc.</h4>
               <p>2010-2012<br/>Software Developer for SharePoint and custom applications. Became System Owner of Project Management software system, leading a team through maintenance and upgrades.<br/>Used: C#/.NET, SharePoint, SQL</p>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col">
             <div class="resume-item">
               <i class="resume-icon icon-pencil"></i>
               <h4>F&M Bank</h4>
               <p>2012-2014<br/>Software Engineer of internal business apps, SharePoint customization, admin, and legacy maintenance. Tech lead of Data Integration automation, website creation and maintenance.<br/>Used: C#/.NET, Javascript, SQL Server, Powershell, TeamCity CI</p>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col">
             <div class="resume-item">
               <i class="resume-icon icon-magnet"></i>
               <h4>Rakuten, Inc.</h4>
               <p>2014-2018<br/>Software Developer for internal cloud web applications that support the mobile infrastructure.<br/>Used:C#/.NET MVC5 API, Microsoft Azure, Javascript/Jquery, SQL Server, Team City CI, Java Spring, Thymeleaf, Spring Security</p>
             </div>
           </div>
-	  <div class="col-md-2">
+	  <div class="col">
             <div class="resume-item">
               <i class="resume-icon icon-magnet"></i>
               <h4>Google</h4>
@@ -145,29 +158,31 @@
     </div>
     <!-- /Resume -->
 
-    <!-- Portfolio -->
+    <!-- Abridged Portfolio -->
     <div id ="portfolio" class="portfolio" style="color:white;">
       <div class="container">
         <div class="row" >
-          <div class="col-md-4 col-md-offset-4 text-center">
+          <div class="col d-flex align-items-center justify-content-center">
             <h2>An Abridged Portfolio</h2>
             <hr>
           </div>
         </div>
+      </div>
+      <div class="container">
         <div class="row">
-	  <div class="col-sm text-center">
+	         <div class="col text-center">
             <div class="portfolio-item">
               <a href="https://github.com/starmandeluxe/mercari-notifier" target="_blank"><img class="img-portfolio img-responsive" src="img/product_list.PNG" alt="Product Notifier" style="height:200px;"></a>
               <h4>Fleamarket Product Listing Notifier</h4>
             </div>
           </div>
-          <div class="col-sm text-center">
+          <div class="col text-center">
             <div class="portfolio-item">
               <a href="midiseq" target="_blank"><img class="img-portfolio img-responsive" src="img/midiseq_screenshot.jpg" alt="MIDI Sequencer" style="height:200px;"></a>
               <h4>Chrome MIDI Sequencer</h4>
             </div>
           </div>
-          <div class="col-sm text-center">
+          <div class="col text-center">
             <div class="portfolio-item">
               <a href="bpmdetector/"><img class="img-portfolio img-responsive" src="img/bpmscreen.jpg" alt="BPM Screen" style="height:200px;"></a>
               <h4>Web Audio BPM Detector</h4>
@@ -182,22 +197,22 @@
     <div id ="music" class="music">
       <div class="vert-text">
        <div class="row" >
-          <div class="col-md-4 col-md-offset-4 text-center">
-            <h1>Music Projects</h1>
+          <div class="col d-flex align-items-center justify-content-center">
+            <h2>Music Projects</h2>
             <hr>
           </div>
         </div>
         <br/>
          <div class="row">
           <div class="col-md-6 text-center">
-          	<div id="kaoss" class="jumbotron" style="width:100%;">
+          	<div id="kaoss" class="bg-light mb-4 rounded-2 py-5 px-3" style="width:100%;">
           		<a href="https://hearthis.at/sdlx/">Live DJ set recordings</a>
           		<br/>
           		<iframe scrolling="no" id="hearthis_at_track_10315324" width="100%" height="150" src="https://app.hearthis.at/embed/10315324/transparent_black/?hcolor=&color=&style=2&block_size=2&block_space=1&background=1&waveform=0&cover=0&autoplay=0&css=" frameborder="0" allowtransparency allow="autoplay"><p>Listen to <a href="https://hearthis.at/sdlx/sdlxaoyamahachi1012023/" target="_blank">SDLX @ Aoyama Hachi 10/1/2023</a> <span>by</span><a href="https://hearthis.at/sdlx/" target="_blank" >SDLX</a> <span>on</span> <a href="https://hearthis.at/" target="_blank">hearthis.at</a></p></iframe>
           	</div>
           </div>
           <div class="col-md-6 text-center">
-          	<div id="starmansoundcloud" class="jumbotron" style="width:100%;">
+          	<div id="starmansoundcloud" class="bg-light mb-4 rounded-2 py-5 px-3" style="width:100%;">
           		<a href="http://www.soundcloud.com/starmandeluxe">SoundCloud (as SDLX)</a>
           		<br/>
           	<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1896577209&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/starmandeluxe" title="SDLX" target="_blank" style="color: #cccccc; text-decoration: none;">SDLX</a> · <a href="https://soundcloud.com/starmandeluxe/ai-no-omoide" title="Ai no Omoide (Suzica - &quot;Memory Of Love&quot; Remix)" target="_blank" style="color: #cccccc; text-decoration: none;">Ai no Omoide (Suzica - &quot;Memory Of Love&quot; Remix)</a></div>	
@@ -207,14 +222,14 @@
         <br/><br/>
         <div class="row">
           <div class="col-md-6 text-center">
-          	<div id="aktion51soundcloud" class="jumbotron" style="width:100%;">
+          	<div id="aktion51soundcloud" class="bg-light mb-4 rounded-2 py-5 px-3" style="width:100%;">
           		<a href="http://www.soundcloud.com/aktion-51">SoundCloud (as AKTioN 51) </a>
           		<br/>
               <iframe width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/199148152&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
           	</div>
           </div>
           <div class="col-md-6 text-center">
-          	<div id="mixcloud" class="jumbotron" style="width:100%;">
+          	<div id="mixcloud" class="bg-light mb-4 rounded-2 py-5 px-3" style="width:100%;">
           		<a href="https://www.mixcloud.com/sdlx86/sdlx-thebar-odaiba-5262024/">Mixcloud</a>
               <iframe width="100%" height="120" src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Fsdlx86%2Fsdlx-thebar-odaiba-5262024%2F" frameborder="0" ></iframe>
           	</div>
@@ -229,8 +244,8 @@
     <div id="contact" class="call-to-action">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3 text-center">
-            <h2>Contact Me</h2>
+          <div class="col">
+            <h2 class="d-flex align-items-center justify-content-center">Contact Me</h2>
             <br/>
             <!-- Form itself -->
 	          <form name="sentMessage" class="well" id="contactForm" novalidate>
@@ -262,7 +277,7 @@
 			</div>
 	               </div> 		 
 		     <div id="success"> </div> <!-- For success/fail messages -->
-		    <button type="submit" class="btn btn-primary pull-right">Send</button><br/><br/>
+		    <button type="submit" class="btn btn-primary float-end">Send</button><br/><br/>
 	          </form> <!-- end form -->
 
             <br/>
@@ -276,17 +291,19 @@
     <footer>
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3 text-center">
-            <ul class="list-inline">
-              <li><a href="https://www.linkedin.com/in/alex-kort/"><i class="icon-large icon-linkedin"></i></a></li>
-              <li><a href="https://twitter.com/starmandlx"><i class="icon-large icon-twitter"></i></a></li>
-              <li><a href="http://www.youtube.com/user/StarmanDeluxe2001"><i class="icon-large icon-youtube"></i></a></li>
-              <li><a href="https://github.com/starmandeluxe"><i class="icon-large icon-github"></i></a></li>
+          <div class="col d-flex align-items-center justify-content-center text-center">
+            <ul class="list-group list-group-horizontal">
+              <li class="list-group-item border-0"><a href="https://www.linkedin.com/in/alex-kort/"><i class="icon-large bi bi-linkedin"></i></a></li>
+              <li class="list-group-item border-0"><a href="https://twitter.com/starmandlx"><i class="icon-large bi bi-twitter-x"></i></a></li>
+              <li class="list-group-item border-0"><a href="http://www.youtube.com/user/StarmanDeluxe2001"><i class="icon-large bi bi-youtube"></i></a></li>
+              <li class="list-group-item border-0"><a href="https://github.com/starmandeluxe"><i class="icon-large bi bi-github"></i></a></li>
             </ul>
-            <hr>
-            <div id="footer" style="color:black;">
-            	<p>Site Design By &copy; Alex Kort 2013</p>
-            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div id="footer" class="align-items-center justify-content-center text-center" style="color:black;">
+              <p>Site Design By &copy; Alex Kort 2024</p>
           </div>
         </div>
       </div>
